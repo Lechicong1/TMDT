@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3307/TMDT  }
+    username: ${DB_USER:root}
+    password: ${DB_PASS:admin123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        physical_naming_strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  security:
+    authentication:
+      jwt:
+        base64-secret: WlSKedhlklTqSrR1VajEv/U46TLFKfLGqNk5d8MqfkNfyuHTuRpeu5bQCxxvvRlRk1G/F6WahwflnqKZP40KaQ==
+        token-validity-in-seconds: 1800
+app:
+  base-url: ${BASE_URL:http://localhost:8080}
+  upload-file:
+    base-path: ${UPLOAD_BASE_PATH:D:/TMDT/Upload}
