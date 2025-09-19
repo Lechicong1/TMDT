@@ -19,9 +19,9 @@ public abstract class ShopMapper {
     public abstract List<ShopReponse> toDTOList(List<ShopEntity> listentity);
     public abstract ShopReponse toDTO(ShopEntity entity);
     @AfterMapping
-    protected void enrich(@MappingTarget DeliveryReponse dto, DeliveryServiceEntity entity) {
-        if (entity.getLogoUrl() != null) {
-            dto.setLogoUrl(baseUrl + "/Upload/" + Folder.LogoShop.name() + "/" + entity.getLogoUrl());
+    protected void enrich(@MappingTarget ShopReponse dto, ShopEntity entity) {
+        if (entity.getShopLogoUrl() != null) {
+            dto.setShopLogoUrl(baseUrl + "/Upload/" + Folder.LogoShop.name() + "/" + entity.getShopLogoUrl());
         }
     }
 }

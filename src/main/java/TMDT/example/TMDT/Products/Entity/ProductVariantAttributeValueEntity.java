@@ -15,7 +15,7 @@ public class ProductVariantAttributeValueEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String value;
-
+    private String imageVariant;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "variant_id")
     private ProductVariantEntity variant;

@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class RegisterSellerRequest {
-
-    private UserEntity user;
     private String shopName;
 
 

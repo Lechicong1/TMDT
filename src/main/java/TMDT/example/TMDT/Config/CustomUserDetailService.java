@@ -22,14 +22,14 @@ public class CustomUserDetailService implements UserDetailsService {
     private final UserRepo userRepo;
     private final UserRoleRepo userRoleRepo;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepo.findByUsername(username);
+    public UserDetails loadUserByUsername(String emailOrPhoneNumber) throws UsernameNotFoundException {
+        UserEntity user = userRepo.findByEmailOrPhone(emailOrPhoneNumber);
         if(user == null) {
             throw new UsernameNotFoundException("Không tìm thấy username");
         }
         List<UserRolesEntity> listRoles=userRoleRepo.findAllByUser(user);
         List<GrantedAuthority> authorities = listRoles.stream()
-                .map(ur -> new SimpleGrantedAuthority(ur.getRole().getName()))
+                .map(ur -> new SimpleGrantedAuthority(ur.getRole().getRoleName().name()))
                 .collect(Collectors.toList());
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),

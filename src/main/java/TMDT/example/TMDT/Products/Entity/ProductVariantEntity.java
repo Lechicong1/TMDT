@@ -25,17 +25,13 @@ public class ProductVariantEntity {
     private BigDecimal length;
     private BigDecimal width;
     private BigDecimal height;
-
+    private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private ProductEntity product;
 
-
     @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductVariantAttributeValueEntity> attributeValues;
 
-
-    @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductVariantImageEntity> images;
 }

@@ -1,11 +1,16 @@
 package TMDT.example.TMDT.Users.ServiceImp;
 
+import TMDT.example.TMDT.Enums.Role;
 import TMDT.example.TMDT.Exception.ResourceNotFoundException;
 import TMDT.example.TMDT.Users.DTO.Mapper.UserMapperImpl;
 import TMDT.example.TMDT.Users.DTO.Request.UserRequest;
 import TMDT.example.TMDT.Users.DTO.Response.UserDTO;
+import TMDT.example.TMDT.Users.Entity.RolesEntity;
 import TMDT.example.TMDT.Users.Entity.UserEntity;
+import TMDT.example.TMDT.Users.Entity.UserRolesEntity;
+import TMDT.example.TMDT.Users.Repository.RoleRepo;
 import TMDT.example.TMDT.Users.Repository.UserRepo;
+import TMDT.example.TMDT.Users.Repository.UserRoleRepo;
 import TMDT.example.TMDT.Users.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,9 @@ public class UserServiceImp implements UserService {
     private final UserRepo userRepo;
     private final UserMapperImpl userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepo roleRepo;
+    private final UserRoleRepo userRoleRepo;
+
     private String generateAutoUsername() {
         String prefix = "user";
         int counter = 1;
@@ -47,8 +55,16 @@ public class UserServiceImp implements UserService {
             userEntity.setVerified(true);
         }
         userEntity.setCreatedAt(LocalDateTime.now());
-
+        RolesEntity roleUsers  = roleRepo.findByRoleName(Role.USER);
+        if(roleUsers == null) {
+            throw new ResourceNotFoundException("Role Not Found");
+        }
         userRepo.save(userEntity);
+        UserRolesEntity userRolesDefault =  new UserRolesEntity();
+        userRolesDefault.setUser(userEntity);
+        userRolesDefault.setRole(roleUsers);
+        userRoleRepo.save(userRolesDefault);
+
     }
 
     @Override

@@ -13,10 +13,12 @@ import TMDT.example.TMDT.Users.Repository.UserRepo;
 import TMDT.example.TMDT.Utils.FileStorage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,18 +30,27 @@ public class ShopServiceImp implements ShopService {
     private final ShopMapper shopMapper;
     private final UserRepo userRepo;
     @Override
-    public void updateShop(Long idShop, ShopRequest request, MultipartFile logo) {
-        ShopEntity entity = repo.findById(idShop).orElseThrow(()->new RuntimeException("Shop not found"));
-        if(request.getShopAddress()!=null) entity.setShopAddress(request.getShopAddress());
-        if(request.getShopName()!=null) entity.setShopName(request.getShopName());
-        if(request.getShopDescription()!=null) entity.setShopDescription(request.getShopDescription());
-        String img = entity.getShopLogoUrl();
+    public void updateShop( ShopRequest request, MultipartFile logo) {
+        var context = SecurityContextHolder.getContext();
+        Long userId = Long.parseLong(
+                ((Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getSubject()
+        );
+        UserEntity usersCur = userRepo.findByIdFetchShop(userId);
+        if(usersCur==null) throw new ResourceNotFoundException("User not found");
+        ShopEntity shopEntity = usersCur.getShop();
+        if(shopEntity ==null) throw new ResourceNotFoundException("Shop not found");
+
+        if(request.getShopAddress()!=null) shopEntity.setShopAddress(request.getShopAddress());
+        if(request.getShopName()!=null) shopEntity.setShopName(request.getShopName());
+        if(request.getShopDescription()!=null) shopEntity.setShopDescription(request.getShopDescription());
+        String img = shopEntity.getShopLogoUrl();
         if (logo != null && !logo.isEmpty()) {
             String fileName = fileStorage.saveFile(logo, Folder.LogoShop.name());
             img = fileName; //ten file anh
         }
-        if (img != null) entity.setShopLogoUrl(img);
-        repo.save(entity);
+        if (img != null) shopEntity.setShopLogoUrl(img);
+        shopEntity.setUpdatedAt(LocalDateTime.now());
+        repo.save(shopEntity);
     }
 
     @Override
@@ -58,13 +69,13 @@ public class ShopServiceImp implements ShopService {
     @Override
     public ShopReponse myShop() {
         var context = SecurityContextHolder.getContext();
-        String username = context.getAuthentication().getName();
-        UserEntity usersCur = userRepo.findByUsername(username);
-        if(usersCur == null) {
-            throw new ResourceNotFoundException("User not found");
-        }
-        ShopEntity shopEntity = repo.findBySeller(usersCur);
-        if(shopEntity == null) throw new ResourceNotFoundException("Shop not found");
+        Long userId = Long.parseLong(
+                ((Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getSubject()
+        );
+        UserEntity usersCur = userRepo.findByIdFetchShop(userId);
+        if(usersCur==null) throw new ResourceNotFoundException("User not found");
+        ShopEntity shopEntity = usersCur.getShop();
+        if(shopEntity ==null) throw new ResourceNotFoundException("Shop not found");
         return shopMapper.toDTO(shopEntity);
     }
 }

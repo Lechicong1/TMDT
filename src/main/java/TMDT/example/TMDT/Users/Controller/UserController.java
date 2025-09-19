@@ -1,7 +1,7 @@
 package TMDT.example.TMDT.Users.Controller;
 
 import TMDT.example.TMDT.Users.DTO.Request.UserRequest;
-import TMDT.example.TMDT.Users.DTO.Response.ResponseData;
+import TMDT.example.TMDT.Respone.ResponseData;
 import TMDT.example.TMDT.Users.DTO.Response.UserDTO;
 import TMDT.example.TMDT.Users.Service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<?> createUser( @RequestBody  UserRequest userRequest) {
         ResponseData resp = new ResponseData();
         HttpStatus httpStatus = HttpStatus.CREATED;

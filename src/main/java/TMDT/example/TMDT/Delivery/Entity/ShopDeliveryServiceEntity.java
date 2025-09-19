@@ -26,9 +26,6 @@ public class ShopDeliveryServiceEntity {
     @JoinColumn(name = "delivery_service_id")
     private DeliveryServiceEntity deliveryService;
 
-
-    private boolean isEnabled;
-    private String externalServiceCode;
-    private String token;
+    private boolean enabled;
     private BigDecimal baseShippingFee;
 }

@@ -27,6 +27,7 @@ public class SecurityFilterChain {
     private final JwtDecoder jwtDecoder;
     private final JwtAuthenticationConverter jwtAuthenticationConverter;
     private final CustomUserDetailService customUserDetailService;
+//    private final CustomUserDetailService customUserDetailService;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -39,11 +40,10 @@ public class SecurityFilterChain {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // ✅ Cho phép preflight CORS
-                        .requestMatchers("/api/login","/api/register","/api/courses/{courseId}","/api/otp/**").permitAll()
-                        .requestMatchers("/upload/**","/api/contact","/api/courses/languages").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/courses").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/teachers").permitAll()
-
+                        .requestMatchers("/login","/register").permitAll()
+                        .requestMatchers("/Upload/**","/api/users/register","/api/courses/languages").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/product","/product/details/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/teachers","/category/**","/VarriantAttribute/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
@@ -64,8 +64,8 @@ public class SecurityFilterChain {
 
         return http.build();
     }
-    @Value("${app.cors.allowed-origin}")
-    private String allowOrigin;
+//    @Value("${app.cors.allowed-origin}")
+    private String allowOrigin="http://127.0.0.1:5500";
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

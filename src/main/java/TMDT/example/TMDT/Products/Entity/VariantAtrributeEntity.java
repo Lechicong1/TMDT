@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "variant_attributes")
+//color , memory ,...
 public class VariantAtrributeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

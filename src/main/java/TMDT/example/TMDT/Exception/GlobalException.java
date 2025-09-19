@@ -1,8 +1,7 @@
 package TMDT.example.TMDT.Exception;
 
-import TMDT.example.TMDT.Users.DTO.Response.ResponseData;
+import TMDT.example.TMDT.Respone.ResponseData;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

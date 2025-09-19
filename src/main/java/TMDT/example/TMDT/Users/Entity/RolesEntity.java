@@ -1,5 +1,6 @@
 package TMDT.example.TMDT.Users.Entity;
 
+import TMDT.example.TMDT.Enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,8 +17,8 @@ public class RolesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String name;
+    @Enumerated(EnumType.STRING) // Lưu tên enum như chuỗi "TEACHER"
+    private Role roleName;
 
     private String description;
 

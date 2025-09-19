@@ -2,5 +2,9 @@ package TMDT.example.TMDT.Enums;
 
 public enum Folder {
     LogoShop,
-    logoDeliveryCarrier
+    logoDeliveryCarrier,
+    SellerRegiter,
+    ProductImage,
+    ProductVariantImage,
+    CategoryImage,
 }

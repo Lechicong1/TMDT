@@ -27,5 +27,5 @@ public class NotificationEntity {
     private String message;
     private String type;
     private LocalDateTime createdAt;
-    private boolean read;
+    private boolean readStatus  ;
 }

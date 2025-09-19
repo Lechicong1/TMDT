@@ -1,10 +1,8 @@
 package TMDT.example.TMDT.Users.Controller;
 
 import TMDT.example.TMDT.Users.DTO.Request.AddressRequest;
-import TMDT.example.TMDT.Users.DTO.Request.UserRequest;
 import TMDT.example.TMDT.Users.DTO.Response.AddressDTO;
-import TMDT.example.TMDT.Users.DTO.Response.ResponseData;
-import TMDT.example.TMDT.Users.DTO.Response.UserDTO;
+import TMDT.example.TMDT.Respone.ResponseData;
 import TMDT.example.TMDT.Users.Service.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

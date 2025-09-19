@@ -1,6 +1,7 @@
 package TMDT.example.TMDT.Users.Entity;
 
-import TMDT.example.TMDT.Cart.Entity.CartItemEntity;
+
+import TMDT.example.TMDT.Cart.Entity.CartEntity;
 import TMDT.example.TMDT.Chat.Entity.ChatMessageEntity;
 import TMDT.example.TMDT.Notification.Entity.NotificationEntity;
 import TMDT.example.TMDT.Orders.Entity.OrderEntity;
@@ -32,7 +33,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = true)
     private String email;
 
     private String phone;
@@ -61,7 +62,7 @@ public class UserEntity {
 
 
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<CartItemEntity> cartItems;
+    private List<CartEntity> cartItems;
 
 
     @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -80,7 +81,7 @@ public class UserEntity {
     private List<ChatMessageEntity> receivedMessages;
 
     @OneToOne(mappedBy = "seller",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private ShopEntity seller;
+    private ShopEntity shop;
 
     @OneToMany(mappedBy = "buyer",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<ReviewEntity> reviews;

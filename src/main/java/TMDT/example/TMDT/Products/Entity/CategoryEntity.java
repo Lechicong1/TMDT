@@ -18,16 +18,16 @@ public class CategoryEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    private String description;
+    private String imageCategory;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private CategoryEntity parentCategory;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "parent_id")
+//    private CategoryEntity parentCategory;
+//
 
-
-    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CategoryEntity> subcategories;
+//    @OneToMany(mappedBy = "parentCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<CategoryEntity> subcategories;
 
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

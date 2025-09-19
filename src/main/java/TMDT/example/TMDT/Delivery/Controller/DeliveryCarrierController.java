@@ -3,12 +3,12 @@ package TMDT.example.TMDT.Delivery.Controller;
 import TMDT.example.TMDT.Delivery.DTO.Reponse.DeliveryReponse;
 import TMDT.example.TMDT.Delivery.DTO.Request.CreateDeliveryCarrierRequest;
 import TMDT.example.TMDT.Delivery.Service.DeliveryService;
-import TMDT.example.TMDT.Shop.Payload.Request.RegisterSellerRequest;
-import TMDT.example.TMDT.Users.DTO.Response.ResponseData;
+import TMDT.example.TMDT.Respone.ResponseData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,10 +16,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/DeliveryCarrier")
+@RequestMapping("/DeliveryService")
 public class DeliveryCarrierController {
-    private final DeliveryService deliveryService;
+    private final DeliveryService  deliveryService;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<?> createDeliveryCarrier(@RequestPart String req,
                                                    @RequestPart("file") MultipartFile file) {
@@ -39,7 +40,7 @@ public class DeliveryCarrierController {
         resp.setSuccess(true);
         return ResponseEntity.status(httpStatus).body(resp);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDeliveryCarrier(@PathVariable Long id,
                                                    @RequestPart String req,
@@ -60,7 +61,7 @@ public class DeliveryCarrierController {
         resp.setSuccess(true);
         return ResponseEntity.status(httpStatus).body(resp);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDeliveryCarrier(@PathVariable Long id) {
         ResponseData resp = new ResponseData();
@@ -70,7 +71,7 @@ public class DeliveryCarrierController {
         resp.setSuccess(true);
         return ResponseEntity.status(httpStatus).body(resp);
     }
-
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping()
     public ResponseEntity<?> findAllDeliveryCarrier() {
         ResponseData resp = new ResponseData();

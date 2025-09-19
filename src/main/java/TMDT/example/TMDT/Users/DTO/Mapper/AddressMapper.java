@@ -8,5 +8,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
+    AddressDTO toDTO(AddressEntity addressEntity);
     List<AddressDTO> toDTOList(List<AddressEntity> entity);
 }

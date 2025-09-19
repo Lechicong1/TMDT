@@ -9,7 +9,7 @@ import lombok.Setter;
 public class RegisterSellerReponse {
 
     private Long id;
-    private UserEntity user;
+    private String username;
     private String shopName;
     private String identityDocumentUrl;
     private String status;

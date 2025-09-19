@@ -1,6 +1,7 @@
 package TMDT.example.TMDT.Products.Entity;
 
 import TMDT.example.TMDT.Reviews.Entity.ReviewEntity;
+import TMDT.example.TMDT.Shop.Entity.ShopEntity;
 import TMDT.example.TMDT.Users.Entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,21 +24,20 @@ public class ProductEntity {
     private String name;
     private String description;
     private BigDecimal price;
-    private boolean isActive;
+    private boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
+    private String productImage;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id")
-    private UserEntity seller;
-
+    @JoinColumn(name = "shop_id")
+    private ShopEntity shop;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ProductImageEntity> images;
+//    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<ProductImageEntity> images;
 
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

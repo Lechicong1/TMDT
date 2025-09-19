@@ -15,7 +15,12 @@ import java.util.List;
 public class CreateDeliveryCarrierRequest {
     private String name;
     private String description;
-
+    private String code;
+    private String token;
+    private String apiUrlCreateOrder;
+    private String apiUrlTracking;
+    private String apiUrlCalculateFee;
+    private Long service_type_id;
     private boolean active;
 
 }
